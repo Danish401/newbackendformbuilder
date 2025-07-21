@@ -25,13 +25,16 @@ const FormSubmission = require("./models/FormSubmission");
 const jwtSecret = process.env.JWT_SECRET;
 
 app.use(bodyParser.json());
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: [
+    'http://localhost:3000',            // Local React dev server
+    'http://localhost:5173',            // Local Vite dev server
+    'https://createanytypeform.netlify.app'  // Live frontend
+  ],
+  credentials: true,                    // Allow cookies, sessions, etc.
+  methods: "GET,POST,PUT,DELETE"        // Allowed HTTP methods
+}));
+
 app.use(express.json());
 // Configure Cloudinary
 cloudinary.config({
